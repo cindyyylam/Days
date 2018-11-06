@@ -1,33 +1,37 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { STATUS_BAR_HEIGHT } from "../constants/constants";
+import { Platform } from "react-native";
+import EventList from "../components/event-list";
+import ActionButton from "react-native-action-button";
 
 export default class Main extends Component {
 	static navigationOptions = () => ({
+		title: "My Events",
 		headerStyle: {
-			height: 0
+			height: Platform.OS === "android" ? 45 + STATUS_BAR_HEIGHT : 45,
+			backgroundColor: "#465B75"
+		},
+		headerTitleStyle: {
+			height: Platform.OS === "android" ? STATUS_BAR_HEIGHT : 0,
+			color: "#E0EEEE",
+			flex: 1,
+			textAlign: "center"
 		},
 		headerLeft: null
 	});
 
+	handleAddEvent = () => {
+		this.props.navigation.navigate("Form");
+	};
+
 	render() {
-		return (
-			<View style={styles.container}>
-				<Text style={styles.text}>This is the main page.</Text>
-			</View>
-		);
+		return [
+			<EventList key="FlatList" />,
+			<ActionButton
+				key="ActionButton"
+				onPress={this.handleAddEvent}
+				buttonColor="rgba(231, 76, 60, 1)"
+			/>
+		];
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "#475F8E"
-	},
-	text: {
-		fontSize: 25,
-		color: "#FFFFFF",
-		fontWeight: "bold"
-	}
-});
