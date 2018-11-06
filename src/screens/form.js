@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Platform, View } from "react-native";
+import {
+	StyleSheet,
+	Platform,
+	View,
+	Text,
+	TouchableHighlight
+} from "react-native";
 import { STATUS_BAR_HEIGHT } from "../constants/constants";
 import EventForm from "../components/event-form";
+import { saveEvent } from "../service/api";
 
 export default class Form extends Component {
 	static navigationOptions = () => ({
@@ -19,7 +26,66 @@ export default class Form extends Component {
 		headerRight: <View />
 	});
 
+	constructor(props) {
+		super(props);
+		this.handleEditForm = this.handleEditForm.bind(this);
+	}
+
+	state = {
+		event: {}
+	};
+
+	handleAddPress = () => {
+		const { event } = this.state;
+		console.log("saving: " + JSON.stringify(event));
+		const { title, date } = event;
+		if (title && date) {
+			saveEvent(event);
+			this.props.navigation.goBack();
+		}
+	};
+
+	handleEditForm = event => {
+		this.setState({ event });
+		console.log("editted");
+	};
+
 	render() {
-		return <EventForm />;
+		return [
+			<EventForm
+				key="EventForm"
+				editForm={e => this.handleEditForm(e)}
+			/>,
+			<View key="AddButton" style={styles.buttonContainer}>
+				<TouchableHighlight
+					onPress={this.handleAddPress}
+					style={styles.button}
+					underlayColor="#3479AC"
+				>
+					<Text style={styles.buttonText}>Add</Text>
+				</TouchableHighlight>
+			</View>
+		];
 	}
 }
+
+const styles = StyleSheet.create({
+	buttonContainer: {
+		backgroundColor: "#475F8E",
+		marginTop: -1
+	},
+	button: {
+		height: 50,
+		backgroundColor: "#5aa0e9",
+		borderColor: "#5aa0e9",
+		alignSelf: "stretch",
+		margin: 30,
+		justifyContent: "center",
+		alignItems: "center",
+		borderRadius: 5
+	},
+	buttonText: {
+		color: "#fff",
+		fontSize: 18
+	}
+});

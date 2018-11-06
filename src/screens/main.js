@@ -3,6 +3,7 @@ import { STATUS_BAR_HEIGHT } from "../constants/constants";
 import { Platform } from "react-native";
 import EventList from "../components/event-list";
 import ActionButton from "react-native-action-button";
+import { getEvents } from "../service/api";
 
 export default class Main extends Component {
 	static navigationOptions = () => ({
@@ -20,13 +21,24 @@ export default class Main extends Component {
 		headerLeft: null
 	});
 
+	componentDidMount() {
+		let events = getEvents();
+		this.setState({ events });
+	}
+
+	state = {
+		events: []
+	};
+
 	handleAddEvent = () => {
 		this.props.navigation.navigate("Form");
 	};
 
 	render() {
+		const { events } = this.state;
+
 		return [
-			<EventList key="FlatList" />,
+			<EventList key="FlatList" events={events} />,
 			<ActionButton
 				key="ActionButton"
 				onPress={this.handleAddEvent}

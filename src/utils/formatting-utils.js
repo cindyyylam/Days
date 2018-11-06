@@ -7,7 +7,7 @@ export function formatDateTime(dateString) {
 		return dateString;
 	}
 
-	return parsed.format("H:MM A on D MMM YYYY");
+	return parsed.format("h:mm A on D MMM YYYY");
 }
 
 export function formatDate(dateString) {

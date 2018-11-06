@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-	View,
-	Text,
-	TouchableHighlight,
-	TextInput,
-	StyleSheet
-} from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { formatDateTime } from "../utils/formatting-utils";
 
@@ -15,13 +9,14 @@ class EventForm extends Component {
 		date: ""
 	};
 
-	handleAddPress = () => {
-		saveEvent(this.state).then(() => this.props.navigation.goBack());
-	};
-
-	handleChangeTitle = value => {
+	handleChangeTitle = title => {
 		this.setState({
-			title: value
+			title
+		});
+		const { date } = this.state;
+		this.props.editForm({
+			title,
+			date
 		});
 	};
 
@@ -33,6 +28,11 @@ class EventForm extends Component {
 
 	handleDatePicked = date => {
 		this.setState({
+			date
+		});
+		const { title } = this.state;
+		this.props.editForm({
+			title,
 			date
 		});
 	};
@@ -58,7 +58,7 @@ class EventForm extends Component {
 					</View>
 					<View style={styles.textContainer}>
 						<TextInput
-							style={[styles.text, styles.borderTop]}
+							style={styles.text}
 							placeholder="Event Date"
 							spellCheck={false}
 							value={formatDateTime(this.state.date.toString())}
@@ -73,13 +73,6 @@ class EventForm extends Component {
 						onCancel={this.handleDatePickerHide}
 					/>
 				</View>
-				<TouchableHighlight
-					onPress={this.handleAddPress}
-					style={styles.button}
-					underlayColor="#3479ac"
-				>
-					<Text style={styles.buttonText}>Add</Text>
-				</TouchableHighlight>
 			</View>
 		);
 	}
@@ -105,20 +98,6 @@ const styles = StyleSheet.create({
 	},
 	textContainer: {
 		marginBottom: 10
-	},
-	button: {
-		height: 50,
-		backgroundColor: "#5aa0e9",
-		borderColor: "#5aa0e9",
-		alignSelf: "stretch",
-		margin: 30,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 5
-	},
-	buttonText: {
-		color: "#fff",
-		fontSize: 18
 	}
 });
 

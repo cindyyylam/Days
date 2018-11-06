@@ -1,119 +1,30 @@
-import React, { Component } from "react";
-import {
-	View,
-	Text,
-	TouchableHighlight,
-	TextInput,
-	StyleSheet
-} from "react-native";
-import DateTimePicker from "react-native-modal-datetime-picker";
-import { formatDateTime } from "../utils/formatting-utils";
+import { AsyncStorage } from "react-native";
+import uuid from "uuid";
 
-class EventForm extends Component {
-	state = {
-		title: null,
-		date: ""
-	};
-
-	handleAddPress = () => {
-		saveEvent(this.state).then(() => this.props.navigation.goBack());
-	};
-
-	handleChangeTitle = value => {
-		this.setState({
-			title: value
-		});
-	};
-
-	handleDatePress = () => {
-		this.setState({
-			showDatePicker: true
-		});
-	};
-
-	handleDatePicked = date => {
-		this.setState({
-			date
-		});
-	};
-
-	handleDatePickerHide = () => {
-		this.setState({
-			showDatePicker: false
-		});
-	};
-
-	render() {
-		return (
-			<View
-				style={{
-					flex: 1
-				}}
-			>
-				<View style={styles.fieldContainer}>
-					<TextInput
-						style={styles.text}
-						placeholder="Event Title"
-						spellCheck={false}
-						onChangeText={this.handleChangeTitle}
-						value={this.state.title}
-					/>
-					<TextInput
-						style={[styles.text, styles.borderTop]}
-						placeholder="Event Date"
-						spellCheck={false}
-						value={formatDateTime(this.state.date.toString())}
-						editable={!this.state.showDatePicker}
-						onFocus={this.handleDatePress}
-					/>
-					<DateTimePicker
-						isVisible={this.state.showDatePicker}
-						mode="datetime"
-						onConfirm={this.handleDatePicked}
-						onCancel={this.handleDatePickerHide}
-					/>
-				</View>
-				<TouchableHighlight
-					onPress={this.handleAddPress}
-					style={styles.button}
-				>
-					<Text style={styles.buttonText}>Add</Text>
-				</TouchableHighlight>
-			</View>
-		);
+export const getEvents = async () => {
+	try {
+		let response = await AsyncStorage.getItem("events");
+		let events = JSON.parse(response);
+		return Object.keys(events).length ? [] : events;
+	} catch (err) {
+		console.log(err);
+		AsyncStorage.setItem("events", []);
 	}
-}
+};
 
-const styles = StyleSheet.create({
-	fieldContainer: {
-		marginTop: 20,
-		marginBottom: 20,
-		backgroundColor: "#fff"
-	},
-	text: {
-		height: 40,
-		margin: 0,
-		marginRight: 7,
-		paddingLeft: 10
-	},
-	button: {
-		height: 50,
-		backgroundColor: "#48BBEC",
-		borderColor: "#48BBEC",
-		alignSelf: "stretch",
-		margin: 10,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 5
-	},
-	buttonText: {
-		color: "#fff",
-		fontSize: 18
-	},
-	borderTop: {
-		borderColor: "#edeeef",
-		borderTopWidth: 0.5
-	}
-});
+export const saveEvent = event => {
+	let events = [];
+	events.push({
+		...event,
+		id: uuid()
+	});
+	console.log("sending event:" + JSON.stringify(events));
+	debugger;
+	AsyncStorage.setItem("events", JSON.stringify(events));
+};
 
-export default EventForm;
+export const deleteEvent = id => {
+	let events = getEvents();
+	let request = events.filter(event => event.id !== id);
+	AsyncStorage.setItem("events", JSON.stringify(request));
+};
