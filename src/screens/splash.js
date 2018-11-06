@@ -1,18 +1,27 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
-import { displayName as appTitle, author } from "./app.json";
+import { displayName as appTitle, author } from "../../app.json";
 
 export default class Splash extends Component {
 	componentDidMount() {
-		setTimeout(() => {}, 5000);
+		setTimeout(() => {
+			this.props.navigation.navigate("Main");
+		}, 3000);
 	}
+
+	static navigationOptions = () => ({
+		headerStyle: {
+			height: 0
+		},
+		headerLeft: null
+	});
 
 	render() {
 		return (
 			<View style={styles.container}>
 				<View style={styles.titleWrapper}>
 					<Image
-						source={require("./assets/logo.png")}
+						source={require("../../assets/logo.png")}
 						style={styles.logo}
 					/>
 					<Text style={styles.title}>{appTitle}</Text>
