@@ -6,7 +6,7 @@ export default class Splash extends Component {
 	componentDidMount() {
 		setTimeout(() => {
 			this.props.navigation.navigate("Main");
-		}, 3000);
+		}, 2000);
 	}
 
 	static navigationOptions = () => ({
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "#2F4F4F"
+		backgroundColor: "#475F8E"
 	},
 	logo: {
 		width: 250,
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
 		fontSize: 40,
 		color: "#E0EEEE",
 		fontWeight: "bold",
-		marginTop: -100
+		marginTop: -200
 	},
 	titleWrapper: {
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: -100
+		marginTop: -200
 	},
 	subtitle: {
 		color: "#C0D9D9",
