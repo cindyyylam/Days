@@ -47,21 +47,25 @@ class EventForm extends Component {
 		return (
 			<View style={styles.form}>
 				<View style={styles.fieldContainer}>
-					<TextInput
-						style={styles.text}
-						placeholder="Event Title"
-						spellCheck={false}
-						onChangeText={this.handleChangeTitle}
-						value={this.state.title}
-					/>
-					<TextInput
-						style={[styles.text, styles.borderTop]}
-						placeholder="Event Date"
-						spellCheck={false}
-						value={formatDateTime(this.state.date.toString())}
-						editable={!this.state.showDatePicker}
-						onFocus={this.handleDatePress}
-					/>
+					<View style={styles.textContainer}>
+						<TextInput
+							style={styles.text}
+							placeholder="Event Title"
+							spellCheck={false}
+							onChangeText={this.handleChangeTitle}
+							value={this.state.title}
+						/>
+					</View>
+					<View style={styles.textContainer}>
+						<TextInput
+							style={[styles.text, styles.borderTop]}
+							placeholder="Event Date"
+							spellCheck={false}
+							value={formatDateTime(this.state.date.toString())}
+							editable={!this.state.showDatePicker}
+							onFocus={this.handleDatePress}
+						/>
+					</View>
 					<DateTimePicker
 						isVisible={this.state.showDatePicker}
 						mode="datetime"
@@ -72,6 +76,7 @@ class EventForm extends Component {
 				<TouchableHighlight
 					onPress={this.handleAddPress}
 					style={styles.button}
+					underlayColor="#3479ac"
 				>
 					<Text style={styles.buttonText}>Add</Text>
 				</TouchableHighlight>
@@ -86,22 +91,27 @@ const styles = StyleSheet.create({
 		backgroundColor: "#475F8E"
 	},
 	fieldContainer: {
-		marginTop: 20,
-		marginBottom: 20,
-		backgroundColor: "#eceff3"
+		margin: 10,
+		marginTop: 50
 	},
 	text: {
-		height: 40,
+		height: 50,
 		margin: 0,
-		marginRight: 7,
-		paddingLeft: 10
+		paddingLeft: 10,
+		borderWidth: 5,
+		backgroundColor: "#dadfe8",
+		borderColor: "#dadfe8",
+		borderRadius: 5
+	},
+	textContainer: {
+		marginBottom: 10
 	},
 	button: {
 		height: 50,
-		backgroundColor: "#48BBEC",
-		borderColor: "#48BBEC",
+		backgroundColor: "#5aa0e9",
+		borderColor: "#5aa0e9",
 		alignSelf: "stretch",
-		margin: 10,
+		margin: 30,
 		justifyContent: "center",
 		alignItems: "center",
 		borderRadius: 5
@@ -109,10 +119,6 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: "#fff",
 		fontSize: 18
-	},
-	borderTop: {
-		borderColor: "#edeeef",
-		borderTopWidth: 0.5
 	}
 });
 
