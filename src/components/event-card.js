@@ -76,7 +76,7 @@ export default function EventCard({ event }) {
 
 const styles = StyleSheet.create({
 	card: {
-		backgroundColor: "#fff",
+		backgroundColor: "#7e8faf",
 		flex: 1,
 		paddingTop: 10,
 		paddingBottom: 20
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 	date: {
 		fontWeight: "200",
 		fontSize: 15,
-		color: "#bdbdbd",
+		color: "#E0EEEE",
 		width: "30%",
 		textAlign: "right"
 	},
@@ -116,12 +116,12 @@ const styles = StyleSheet.create({
 	counterLabel: {
 		fontSize: 13,
 		fontWeight: "100",
-		color: "#a3a3a3",
+		color: "#E0EEEE",
 		textAlign: "center",
 		paddingTop: 0
 	},
 	swipeout: {
-		backgroundColor: "#fff",
+		backgroundColor: "#7e8faf",
 		marginTop: 5,
 		marginBottom: 5
 	}
@@ -130,6 +130,6 @@ const styles = StyleSheet.create({
 EventCard.propTypes = {
 	event: PropTypes.shape({
 		title: PropTypes.string.isRequired,
-		date: PropTypes.instanceOf(Date)
+		date: PropTypes.string.isRequired
 	})
 };

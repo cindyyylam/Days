@@ -8,14 +8,10 @@ class EventList extends Component {
 		super(props);
 	}
 
-	state = {
-		events: this.props.events
-	};
-
 	componentDidMount() {
 		setInterval(() => {
 			this.setState({
-				events: this.state.events.map(e => ({
+				events: this.props.state.events.map(e => ({
 					...e,
 					timer: Date.now() // used just to trigger a rerender every second
 				}))
@@ -24,7 +20,7 @@ class EventList extends Component {
 	}
 
 	render() {
-		const { events } = this.state;
+		const { events } = this.props.state;
 
 		return (
 			<FlatList

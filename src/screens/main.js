@@ -34,10 +34,6 @@ class Main extends Component {
 		);
 	}
 
-	state = {
-		events: []
-	};
-
 	handleBackPress = () => {
 		return true;
 	};
@@ -47,7 +43,7 @@ class Main extends Component {
 	};
 
 	render() {
-		const { events } = this.state;
+		const { events } = this.props.state;
 
 		return [
 			<EventList key="FlatList" events={events} />,
