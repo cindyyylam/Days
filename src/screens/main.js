@@ -4,8 +4,9 @@ import { Platform } from "react-native";
 import EventList from "../components/event-list";
 import ActionButton from "react-native-action-button";
 import { getEvents } from "../service/api";
+import { connect } from "react-redux";
 
-export default class Main extends Component {
+class Main extends Component {
 	static navigationOptions = () => ({
 		title: "My Events",
 		headerStyle: {
@@ -47,3 +48,14 @@ export default class Main extends Component {
 		];
 	}
 }
+
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({});
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Main);

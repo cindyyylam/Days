@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, FlatList } from "react-native";
 import EventCard from "./event-card";
+import { connect } from "react-redux";
 
 class EventList extends Component {
 	constructor(props) {
@@ -36,6 +37,12 @@ class EventList extends Component {
 	}
 }
 
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({});
+
 const styles = StyleSheet.create({
 	list: {
 		flex: 1,
@@ -44,4 +51,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default EventList;
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(EventList);

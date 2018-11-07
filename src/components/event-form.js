@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 import DateTimePicker from "react-native-modal-datetime-picker";
 import { formatDateTime } from "../utils/formatting-utils";
+import { connect } from "react-redux";
 
 class EventForm extends Component {
 	state = {
@@ -78,6 +79,12 @@ class EventForm extends Component {
 	}
 }
 
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({});
+
 const styles = StyleSheet.create({
 	form: {
 		flex: 1,
@@ -101,4 +108,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default EventForm;
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(EventForm);
