@@ -58,8 +58,7 @@ class Form extends Component {
 		console.log("saving: " + JSON.stringify(event));
 		const { title, date } = event;
 		if (title && date) {
-			saveEvent(event);
-			this.props.navigation.goBack();
+			this.props.handleSaveEvent(event);
 		}
 	};
 
@@ -91,7 +90,12 @@ const mapStateToProps = state => ({
 	state: state.root
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({});
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	handleSaveEvent: event => {
+		saveEvent(dispatch, event);
+		ownProps.navigation.goBack();
+	}
+});
 
 const styles = StyleSheet.create({
 	buttonContainer: {

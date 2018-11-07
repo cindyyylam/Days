@@ -3,8 +3,10 @@ import { StyleSheet, Text, View, Alert } from "react-native";
 import PropTypes from "prop-types";
 import { formatDate, getCountdownParts } from "../utils/formatting-utils";
 import Swipeout from "react-native-swipeout";
+import { connect } from "react-redux";
+import { deleteEvent } from "../service/api";
 
-export default function EventCard({ event }) {
+function EventCard({ event }) {
 	const { date, title, id } = event;
 	const { days, hours, minutes, seconds } = getCountdownParts(date);
 	const swipeSettings = {
@@ -26,7 +28,9 @@ export default function EventCard({ event }) {
 							},
 							{
 								text: "Yes",
-								onPress: () => {}
+								onPress: id => {
+									this.props.handleDeleteEvent(id);
+								}
 							}
 						],
 						{ cancelable: true }
@@ -73,6 +77,14 @@ export default function EventCard({ event }) {
 		</Swipeout>
 	);
 }
+
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	handleDeleteEvent: id => deleteEvent(dispatch, id)
+});
 
 const styles = StyleSheet.create({
 	card: {
@@ -133,3 +145,8 @@ EventCard.propTypes = {
 		date: PropTypes.string.isRequired
 	})
 };
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(EventCard);

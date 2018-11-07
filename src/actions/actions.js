@@ -19,3 +19,43 @@ export const getEventsFailure = errors => {
 		errors
 	};
 };
+
+export const saveEventBegin = () => {
+	return {
+		type: types.SAVE_EVENT_BEGIN
+	};
+};
+
+export const saveEventSuccess = events => {
+	return {
+		type: types.SAVE_EVENT_SUCCESS,
+		events
+	};
+};
+
+export const saveEventFailure = errors => {
+	return {
+		type: types.SAVE_EVENT_FAILURE,
+		errors
+	};
+};
+
+export const deleteEventBegin = () => {
+	return {
+		type: types.DELETE_EVENT_BEGIN
+	};
+};
+
+export const deleteEventSuccess = events => {
+	return {
+		type: types.DELETE_EVENT_SUCCESS,
+		events
+	};
+};
+
+export const deleteEventFailure = errors => {
+	return {
+		type: types.DELETE_EVENT_FAILURE,
+		errors
+	};
+};
