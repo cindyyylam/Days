@@ -24,6 +24,4 @@ const mapStateToProps = state => ({
 	state: state.nav
 });
 
-const AppWithNavigationState = connect(mapStateToProps)(App);
-
-export default AppWithNavigationState;
+export default connect(mapStateToProps)(App);

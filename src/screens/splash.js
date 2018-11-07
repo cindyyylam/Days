@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image, Text } from "react-native";
 import { displayName as appTitle, author } from "../../app.json";
+import { connect } from "react-redux";
 
-export default class Splash extends Component {
+class Splash extends Component {
 	componentDidMount() {
 		setTimeout(() => {
-			this.props.navigation.navigate("Main");
+			this.props.endSplash();
 		}, 2000);
 	}
 
@@ -31,6 +32,14 @@ export default class Splash extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	endSplash: () => ownProps.navigation.navigate("Main")
+});
 
 const styles = StyleSheet.create({
 	container: {
@@ -61,3 +70,8 @@ const styles = StyleSheet.create({
 		paddingBottom: 20
 	}
 });
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Splash);
