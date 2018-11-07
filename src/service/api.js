@@ -1,15 +1,17 @@
 import { AsyncStorage } from "react-native";
 import uuid from "uuid";
+import {
+	getEventsBegin,
+	getEventsSuccess,
+	getEventsFailure
+} from "../actions/actions";
 
-export const getEvents = async () => {
-	try {
-		let response = await AsyncStorage.getItem("events");
-		let events = JSON.parse(response);
-		return Object.keys(events).length ? [] : events;
-	} catch (err) {
-		console.log(err);
-		AsyncStorage.setItem("events", []);
-	}
+export const getEvents = async dispatch => {
+	dispatch(getEventsBegin());
+	AsyncStorage.getItem("events")
+		.then(res => JSON.parse(res))
+		.then(events => dispatch(getEventsSuccess(events)))
+		.catch(err => dispatch(getEventsFailure(err)));
 };
 
 export const saveEvent = event => {

@@ -24,8 +24,7 @@ class Main extends Component {
 
 	componentDidMount() {
 		BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
-		let events = getEvents();
-		this.setState({ events });
+		this.props.getEvents();
 	}
 
 	componentWillUnmount() {
@@ -66,6 +65,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+	getEvents: () => getEvents(dispatch),
 	addEvent: () => ownProps.navigation.navigate("Form")
 });
 

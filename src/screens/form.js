@@ -11,7 +11,6 @@ import { STATUS_BAR_HEIGHT } from "../constants/constants";
 import EventForm from "../components/event-form";
 import { saveEvent } from "../service/api";
 import { connect } from "react-redux";
-import { NavigationActions } from "react-navigation";
 
 class Form extends Component {
 	static navigationOptions = () => ({
