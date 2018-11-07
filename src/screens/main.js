@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { STATUS_BAR_HEIGHT } from "../constants/constants";
-import { Platform } from "react-native";
+import { Platform, BackHandler } from "react-native";
 import EventList from "../components/event-list";
 import ActionButton from "react-native-action-button";
 import { getEvents } from "../service/api";
@@ -23,16 +23,28 @@ class Main extends Component {
 	});
 
 	componentDidMount() {
+		BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 		let events = getEvents();
 		this.setState({ events });
+	}
+
+	componentWillUnmount() {
+		BackHandler.removeEventListener(
+			"hardwareBackPress",
+			this.handleBackPress
+		);
 	}
 
 	state = {
 		events: []
 	};
 
+	handleBackPress = () => {
+		return true;
+	};
+
 	handleAddEvent = () => {
-		this.props.navigation.navigate("Form");
+		this.props.addEvent();
 	};
 
 	render() {
@@ -53,7 +65,9 @@ const mapStateToProps = state => ({
 	state: state.root
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({});
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	addEvent: () => ownProps.navigation.navigate("Form")
+});
 
 export default connect(
 	mapStateToProps,

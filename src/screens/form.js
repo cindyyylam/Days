@@ -4,13 +4,16 @@ import {
 	Platform,
 	View,
 	Text,
-	TouchableHighlight
+	TouchableHighlight,
+	BackHandler
 } from "react-native";
 import { STATUS_BAR_HEIGHT } from "../constants/constants";
 import EventForm from "../components/event-form";
 import { saveEvent } from "../service/api";
+import { connect } from "react-redux";
+import { NavigationActions } from "react-navigation";
 
-export default class Form extends Component {
+class Form extends Component {
 	static navigationOptions = () => ({
 		title: "Add an Event",
 		headerStyle: {
@@ -26,6 +29,17 @@ export default class Form extends Component {
 		headerRight: <View />
 	});
 
+	componentDidMount() {
+		BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+	}
+
+	componentWillUnmount() {
+		BackHandler.removeEventListener(
+			"hardwareBackPress",
+			this.handleBackPress
+		);
+	}
+
 	constructor(props) {
 		super(props);
 		this.handleEditForm = this.handleEditForm.bind(this);
@@ -33,6 +47,11 @@ export default class Form extends Component {
 
 	state = {
 		event: {}
+	};
+
+	handleBackPress = () => {
+		this.props.navigation.goBack(null);
+		return true;
 	};
 
 	handleAddPress = () => {
@@ -69,6 +88,12 @@ export default class Form extends Component {
 	}
 }
 
+const mapStateToProps = state => ({
+	state: state.root
+});
+
+const mapDispatchToProps = (dispatch, ownProps) => ({});
+
 const styles = StyleSheet.create({
 	buttonContainer: {
 		backgroundColor: "#475F8E",
@@ -89,3 +114,8 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	}
 });
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Form);
