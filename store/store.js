@@ -1,11 +1,11 @@
-import { createStore, compose, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { rootReducer } from "../src/reducers/root";
-import { navReducer } from "../src/navigator";
+import { navReducer, middleware } from "../src/navigator";
+import logger from "redux-logger";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const allReducers = combineReducers({
 	root: rootReducer,
 	nav: navReducer
 });
-const store = createStore(allReducers, composeEnhancers());
+const store = createStore(allReducers, applyMiddleware(logger, middleware));
 export default store;
