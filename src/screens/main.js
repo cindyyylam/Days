@@ -38,18 +38,15 @@ class Main extends Component {
 		return true;
 	};
 
-	handleAddEvent = () => {
-		this.props.addEvent();
-	};
-
 	render() {
 		const { events } = this.props.state;
+		const { addEvent } = this.props;
 
 		return [
 			<EventList key="FlatList" events={events} />,
 			<ActionButton
 				key="ActionButton"
-				onPress={this.handleAddEvent}
+				onPress={addEvent}
 				buttonColor="rgba(231, 76, 60, 1)"
 			/>
 		];
