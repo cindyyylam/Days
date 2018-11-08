@@ -13,3 +13,7 @@ export const DELETE_EVENT_FAILURE = "DELETE_EVENT_FAILURE";
 export const CHANGE_TITLE = "CHANGE_TITLE";
 export const CHANGE_DATE = "CHANGE_DATE";
 export const TOGGLE_DATE_PICKER = "TOGGLE_DATE_PICKER";
+
+export const TIMER_START = "TIMER_START";
+export const TIMER_TICK = "TIMER_TICK";
+export const TIMER_STOP = "TIMER_STOP";

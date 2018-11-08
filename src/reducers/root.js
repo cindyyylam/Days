@@ -17,7 +17,8 @@ import {
 import {
 	changeTitle,
 	changeDate,
-	toggleDatePicker
+	toggleDatePicker,
+	timerTick
 } from "../reducers/reducers";
 
 const initialState = {
@@ -53,6 +54,8 @@ export const rootReducer = (state = initialState, action) => {
 			return changeDate(state, action);
 		case types.TOGGLE_DATE_PICKER:
 			return toggleDatePicker(state, action);
+		case types.TIMER_TICK:
+			return timerTick(state, action);
 		default:
 			return state;
 	}

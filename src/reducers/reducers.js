@@ -33,3 +33,10 @@ export const toggleDatePicker = (state, { toggle }) => {
 		}
 	};
 };
+
+export const timerTick = (state, { counter }) => {
+	return {
+		...state,
+		counter
+	};
+};

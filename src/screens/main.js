@@ -5,6 +5,7 @@ import EventList from "../components/event-list";
 import ActionButton from "react-native-action-button";
 import { getEvents } from "../service/api";
 import { connect } from "react-redux";
+import { start, stop } from "../components/timer";
 
 class Main extends Component {
 	static navigationOptions = () => ({
@@ -25,6 +26,7 @@ class Main extends Component {
 	componentDidMount() {
 		BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
 		this.props.getEvents();
+		this.props.startTimer();
 	}
 
 	componentWillUnmount() {
@@ -32,6 +34,7 @@ class Main extends Component {
 			"hardwareBackPress",
 			this.handleBackPress
 		);
+		this.props.stopTimer();
 	}
 
 	handleBackPress = () => {
@@ -59,7 +62,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	getEvents: () => getEvents(dispatch),
-	addEvent: () => ownProps.navigation.navigate("Form")
+	addEvent: () => ownProps.navigation.navigate("Form"),
+	startTimer: () => start(dispatch),
+	stopTimer: () => stop(dispatch)
 });
 
 export default connect(
