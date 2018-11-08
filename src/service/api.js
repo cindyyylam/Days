@@ -47,7 +47,7 @@ export const deleteEvent = async (dispatch, id) => {
 		.then(events =>
 			AsyncStorage.setItem("events", JSON.stringify(events))
 				.then(
-					AsyncStore.getItem("events")
+					AsyncStorage.getItem("events")
 						.then(res => JSON.parse(res))
 						.then(events => dispatch(deleteEventSuccess(events)))
 						.catch(err => dispatch(deleteEventFailure(err)))
