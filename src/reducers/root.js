@@ -14,9 +14,15 @@ import {
 	deleteEventSuccess,
 	deleteEventFailure
 } from "../reducers/deleteEvent";
+import {
+	changeTitle,
+	changeDate,
+	toggleDatePicker
+} from "../reducers/reducers";
 
 const initialState = {
 	events: [],
+	form: {},
 	loading: false,
 	errors: null
 };
@@ -41,6 +47,12 @@ export const rootReducer = (state = initialState, action) => {
 			return deleteEventSuccess(state, action);
 		case types.DELETE_EVENT_FAILURE:
 			return deleteEventFailure(state, action);
+		case types.CHANGE_TITLE:
+			return changeTitle(state, action);
+		case types.CHANGE_DATE:
+			return changeDate(state, action);
+		case types.TOGGLE_DATE_PICKER:
+			return toggleDatePicker(state, action);
 		default:
 			return state;
 	}

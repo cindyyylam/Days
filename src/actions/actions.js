@@ -59,3 +59,24 @@ export const deleteEventFailure = errors => {
 		errors
 	};
 };
+
+export const changeTitle = title => {
+	return {
+		type: types.CHANGE_TITLE,
+		title
+	};
+};
+
+export const changeDate = date => {
+	return {
+		type: types.CHANGE_DATE,
+		date: date.toString()
+	};
+};
+
+export const toggleDatePicker = toggle => {
+	return {
+		type: types.TOGGLE_DATE_PICKER,
+		toggle
+	};
+};

@@ -6,17 +6,21 @@ import { connect } from "react-redux";
 class EventList extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			timer: 0
+		};
 	}
 
 	componentDidMount() {
-		setInterval(() => {
+		this.interval = setInterval(() => {
 			this.setState({
-				events: this.props.state.events.map(e => ({
-					...e,
-					timer: Date.now() // used just to trigger a rerender every second
-				}))
+				timer: Date.now() // used just to trigger a rerender every second
 			});
 		}, 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 
 	render() {

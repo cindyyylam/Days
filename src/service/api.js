@@ -24,12 +24,18 @@ export const saveEvent = async (dispatch, event) => {
 	dispatch(saveEventBegin());
 	AsyncStorage.getItem("events")
 		.then(res => JSON.parse(res))
-		.then(events => events.push({ ...event, id: uuid() }))
-		.then(events =>
-			AsyncStorage.mergeItem("events", JSON.stringify(events))
-				.then(res => dispatch(saveEventSuccess(res)))
-				.catch(err => dispatch(saveEventFailure(err)))
-		)
+		.then(events => {
+			events = events ? events : [];
+			events.push({ ...event, id: uuid() });
+			AsyncStorage.setItem("events", JSON.stringify(events))
+				.then(
+					AsyncStorage.getItem("events")
+						.then(res => JSON.parse(res))
+						.then(events => dispatch(saveEventSuccess(events)))
+						.catch(err => dispatch(saveEventFailure(err)))
+				)
+				.catch(err => dispatch(saveEventFailure(err)));
+		})
 		.catch(err => dispatch(saveEventFailure(err)));
 };
 
@@ -39,8 +45,13 @@ export const deleteEvent = async (dispatch, id) => {
 		.then(res => JSON.parse(res))
 		.then(events => events.filter(event => event.id !== id))
 		.then(events =>
-			AsyncStorage.mergeItem("events", JSON.stringify(events))
-				.then(res => dispatch(deleteEventSuccess(res)))
+			AsyncStorage.setItem("events", JSON.stringify(events))
+				.then(
+					AsyncStore.getItem("events")
+						.then(res => JSON.parse(res))
+						.then(events => dispatch(deleteEventSuccess(events)))
+						.catch(err => dispatch(deleteEventFailure(err)))
+				)
 				.catch(err => dispatch(deleteEventFailure(err)))
 		)
 		.catch(err => dispatch(deleteEventFailure(err)));

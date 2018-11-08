@@ -4,7 +4,7 @@ import {
 	Platform,
 	View,
 	Text,
-	TouchableHighlight,
+	TouchableOpacity,
 	BackHandler
 } from "react-native";
 import { STATUS_BAR_HEIGHT } from "../constants/constants";
@@ -39,48 +39,27 @@ class Form extends Component {
 		);
 	}
 
-	constructor(props) {
-		super(props);
-		this.handleEditForm = this.handleEditForm.bind(this);
-	}
-
-	state = {
-		event: {}
-	};
-
 	handleBackPress = () => {
+		// TODO: temporary solution, could this be placed in mapDispatchToProps?
 		this.props.navigation.goBack(null);
 		return true;
 	};
 
-	handleAddPress = () => {
-		const { event } = this.state;
-		console.log("saving: " + JSON.stringify(event));
-		const { title, date } = event;
-		if (title && date) {
-			this.props.handleSaveEvent(event);
-		}
-	};
-
-	handleEditForm = event => {
-		this.setState({ event });
-		console.log("editted");
-	};
-
 	render() {
+		const { form } = this.props.state;
+		const { title, date } = form;
+
 		return [
-			<EventForm
-				key="EventForm"
-				editForm={e => this.handleEditForm(e)}
-			/>,
+			<EventForm key="EventForm" />,
 			<View key="AddButton" style={styles.buttonContainer}>
-				<TouchableHighlight
-					onPress={this.handleAddPress}
+				<TouchableOpacity
+					disabled={!title || !date}
+					onPress={() => this.props.handleSaveEvent(form)}
 					style={styles.button}
 					underlayColor="#3479AC"
 				>
 					<Text style={styles.buttonText}>Add</Text>
-				</TouchableHighlight>
+				</TouchableOpacity>
 			</View>
 		];
 	}

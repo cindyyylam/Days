@@ -9,7 +9,8 @@ export const saveEventSuccess = (state, { events }) => {
 	return {
 		...state,
 		loading: false,
-		events
+		events,
+		form: {}
 	};
 };
 
@@ -17,6 +18,7 @@ export const saveEventFailure = (state, { errors }) => {
 	return {
 		...state,
 		loading: false,
-		errors
+		errors,
+		form: {}
 	};
 };
